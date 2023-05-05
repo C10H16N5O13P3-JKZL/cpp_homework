@@ -19,7 +19,7 @@ using namespace std;
  * @param istream
  * @author 水冰月
  *
- *  重载此函数允许从迭代器中读取
+ * @TODO 重载此函数允许从迭代器中读取
  */
 void Calculator::receive(istream &is) {
     getline(is,raw_input);
@@ -27,8 +27,13 @@ void Calculator::receive(istream &is) {
     pushin();
 }
 /*!
+ *  本函数用于
+ *  计算算式的值
  *
- * @return
+ *  默认取用私有变量中保存的字符串
+ * @return 计算结果（double）
+ * @param None
+ * @author 水冰月
  */
 double Calculator::eval() {
     return 0;

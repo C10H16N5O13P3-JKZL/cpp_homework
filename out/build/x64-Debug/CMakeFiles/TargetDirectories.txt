@@ -1,0 +1,3 @@
+D:/Programming Projects/CLion CPP Projects/homework/out/build/x64-Debug/CMakeFiles/homework.dir
+D:/Programming Projects/CLion CPP Projects/homework/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+D:/Programming Projects/CLion CPP Projects/homework/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
