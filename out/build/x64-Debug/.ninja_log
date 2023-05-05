@@ -1,0 +1,5 @@
+# ninja log v5
+1	555	7050055641680889	CMakeFiles/homework.dir/main.cpp.obj	666befb5c3cd9520
+6	570	7050055641847203	CMakeFiles/homework.dir/Calculator.cpp.obj	1b40b731aab63c6e
+2	399	7050056488286505	CMakeFiles/homework.dir/Calculator.cpp.obj	1b40b731aab63c6e
+400	671	7050056490864601	homework.exe	da319384be17824b
