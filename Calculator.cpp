@@ -38,3 +38,21 @@ void Calculator::receive(istream &is) {
 double Calculator::eval() {
     return 0;
 }
+
+ostream& Calculator::output(ostream& os)
+{
+    return os;
+}
+
+void Calculator::clean_buff()
+{
+}
+
+string Calculator::format()
+{
+    return string();
+}
+
+void Calculator::pushin()
+{
+}
