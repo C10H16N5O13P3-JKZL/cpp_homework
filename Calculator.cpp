@@ -103,6 +103,7 @@ void Calculator::mainProcess(string &temp)
             case '[':
             case '{':
                 symbol_stack.push(temp[i]);
+                break;
             case ')':
                 while (symbol_stack.top()!='('){
                     doCalculate();
@@ -169,7 +170,6 @@ void Calculator::reception() {
     cout<<"| +,-,*,/,^,%,negative(-),positive(+),abs             |"<<endl;
     cout<<"| Type equation to calculate                          |"<<endl;
     cout<<"-------------------------------------------------------"<<endl;
-    cout<<": ";
 }
 
 bool Calculator::isInt(double x) {
@@ -225,4 +225,19 @@ double Calculator::eval(double x1, double x2, char c) {
             cerr<<"invalid input: unknown operator";
             throw invalid_argument("unknown operator");
     }
+}
+
+bool Calculator::wavehand() {
+    cout<<"If you do not want to calculate another equation ,enter 'n' to exit."<<endl;
+    cout<<"Or enter 'c' to continue"<<endl;
+    char c;
+    cin>>c;
+    return c != 'n';
+}
+
+bool Calculator::calculate() {
+    Calculator::reception();
+    receive();
+    output();
+    return wavehand();
 }

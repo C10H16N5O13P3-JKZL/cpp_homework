@@ -15,35 +15,38 @@ using namespace std;
 class Calculator {
 public:
     Calculator() = default;
-    static void reception();
-    void receive(istream &is = cin);
-    static double eval(double ,double ,char );
-    ostream &output(ostream &os = cout);
+    bool calculate();
 private:
-enum PRIORITY{
-    PRIORITY_LEVEL_0 = 0, //+-
-    PRIORITY_LEVEL_1 = 1, //*/
-    PRIORITY_LEVEL_2 = 2, //%^
-    PRIORITY_LEVEL_3 = 3, //!
-    PRIORITY_LEVEL_ERR = -1
-}; //用于定义符号优先级
-enum ABS_NUM{
-    ABS_NUM_ODD = 1,
-    ABS_NUM_EVEN = 2
-}; //用于计算绝对值符号个数
+    static void reception();
+    ostream &output(ostream &os = cout);
+    bool wavehand();
+    void receive(istream &is = cin);
 
-stack<char> symbol_stack;
-stack<double> figure_stack;
-string preprocess();
-void mainProcess(string &);
-static bool isInt(double );
-bool isLeftBracket();
-static int getPrior(char );
+    enum PRIORITY{
+        PRIORITY_LEVEL_0 = 0, //+-
+        PRIORITY_LEVEL_1 = 1, //*/
+        PRIORITY_LEVEL_2 = 2, //%^
+        PRIORITY_LEVEL_3 = 3, //!
+        PRIORITY_LEVEL_ERR = -1
+    }; //用于定义符号优先级
+    enum ABS_NUM{
+        ABS_NUM_ODD = 1,
+        ABS_NUM_EVEN = 2
+    }; //用于计算绝对值符号个数
 
-double result{};
-vector<string> postfix;
-string raw_input;
-void doCalculate();
+    stack<char> symbol_stack;
+    stack<double> figure_stack;
+    static double eval(double ,double ,char );
+    string preprocess();
+    void mainProcess(string &);
+    static bool isInt(double );
+    bool isLeftBracket();
+    static int getPrior(char );
+
+    double result{};
+    vector<string> postfix;
+    string raw_input;
+    void doCalculate();
 };
 
 

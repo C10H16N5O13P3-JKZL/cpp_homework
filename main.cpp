@@ -1,9 +1,10 @@
 #include "Calculator.h"
 
 int main() {
+    bool flag = true;
     Calculator calculator = Calculator();
-    Calculator::reception();
-    calculator.receive();
-    calculator.output();
+    while (flag){
+        flag = calculator.calculate();
+    }
     return 0;
 }
