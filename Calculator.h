@@ -13,6 +13,8 @@ using namespace std;
 
 class Calculator {
 public:
+    Calculator() = default;
+    static void reception();
     void receive(istream &is = cin);
     double eval();
     ostream &output(ostream &os = cout);
@@ -31,6 +33,7 @@ enum ABS_NUM{
 stack<char> symbol_stack;
 string format();
 void pushin();
+void odd_operator_transform();
 
 string raw_input;
 string formatted_input;

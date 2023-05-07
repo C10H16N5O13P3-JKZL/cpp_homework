@@ -1,0 +1,9 @@
+# ninja log v5
+10	2504	7051519981354132	CMakeFiles/homework.dir/Calculator.cpp.obj	dcf2c5fd1a759dea
+0	2506	7051519981369206	CMakeFiles/homework.dir/main.cpp.obj	bc34b50938335635
+2506	3053	7051519986806252	homework.exe	b41f37c80577a02d
+3	272	7051520394092140	CMakeFiles/homework.dir/Calculator.cpp.obj	dcf2c5fd1a759dea
+272	357	7051520394910064	homework.exe	b41f37c80577a02d
+2	254	7051527978687250	CMakeFiles/homework.dir/Calculator.cpp.obj	dcf2c5fd1a759dea
+10	273	7051527978862710	CMakeFiles/homework.dir/main.cpp.obj	bc34b50938335635
+273	353	7051527979654271	homework.exe	b41f37c80577a02d

@@ -1,6 +1,7 @@
-#include <iostream>
+#include "Calculator.h"
 
 int main() {
-	std::cout << "²âÊÔÊä³ö" << std::endl;
-	return 0;
+    Calculator calculator = Calculator();
+    Calculator::reception();
+    return 0;
 }

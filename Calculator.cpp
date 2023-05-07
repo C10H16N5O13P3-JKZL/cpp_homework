@@ -50,9 +50,22 @@ void Calculator::clean_buff()
 
 string Calculator::format()
 {
+    odd_operator_transform();
     return string();
 }
 
 void Calculator::pushin()
 {
+}
+
+void Calculator::odd_operator_transform() {
+
+}
+
+void Calculator::reception() {
+    cout<<"-------------------------------------------------------"<<endl;
+    cout<<"| This calculator supports following operations:      |"<<endl;
+    cout<<"| +,-,*,/,^,%,negative(-),positive(+)                 |"<<endl;
+    cout<<"| Type equation to calculate                          |"<<endl;
+    cout<<"-------------------------------------------------------"<<endl;
 }
