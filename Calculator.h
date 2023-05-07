@@ -33,9 +33,7 @@ enum ABS_NUM{
 stack<char> symbol_stack;
 string preprocess();
 void pushin(string &);
-static inline bool isLeftOperator(string &temp,string::size_type index) {
-    return temp[index-1] == '(' || temp[index-1] == '+' || temp[index-1] == '-' || temp[index-1] == '*' || temp[index-1] == '/' || temp[index-1] == '^';
-}
+
 
 string raw_input;
 string formatted_input;

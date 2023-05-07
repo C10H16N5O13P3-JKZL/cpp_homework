@@ -24,6 +24,7 @@ using namespace std;
 void Calculator::receive(istream &is) {
     getline(is,raw_input);
     auto temp = preprocess();
+    cout<<temp;
     pushin(temp);
 }
 /*!
@@ -53,20 +54,14 @@ string Calculator::preprocess()
     string temp = raw_input;
     string::size_type index = 0;
     while ((index=temp.find('-',index)) != string::npos) {
-        if (index-1 >=0&&temp[index-1] == '-'){
-            temp.insert(index+1,"+");
-            temp.erase(index-1,2);
-            index++;
-            continue;
-        }
-        if (index-1 <0 || isLeftOperator(temp,index)){
+        if (index-1 <0 || temp[index-1] =='('){
             temp.insert(index,"0");
         }
         index++;
     }
     index = 0;
     while ((index=temp.find('+',index)) != string::npos) {
-        if (index-1 <0 || isLeftOperator(temp,index)){
+        if (index-1 <0 || temp[index-1] =='('){
             temp.insert(index,"0");
         }
         index++;
