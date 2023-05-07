@@ -23,8 +23,8 @@ using namespace std;
  */
 void Calculator::receive(istream &is) {
     getline(is,raw_input);
-    format();
-    pushin();
+    auto temp = preprocess();
+    pushin(temp);
 }
 /*!
  *  本函数用于
@@ -48,18 +48,36 @@ void Calculator::clean_buff()
 {
 }
 
-string Calculator::format()
+string Calculator::preprocess()
 {
-    odd_operator_transform();
-    return string();
+    string temp = raw_input;
+    string::size_type index = 0;
+    while ((index=temp.find('-',index)) != string::npos) {
+        if (index-1 >=0&&temp[index-1] == '-'){
+            temp.insert(index+1,"+");
+            temp.erase(index-1,2);
+            index++;
+            continue;
+        }
+        if (index-1 <0 || isLeftOperator(temp,index)){
+            temp.insert(index,"0");
+        }
+        index++;
+    }
+    index = 0;
+    while ((index=temp.find('+',index)) != string::npos) {
+        if (index-1 <0 || isLeftOperator(temp,index)){
+            temp.insert(index,"0");
+        }
+        index++;
+    }
+    return temp;
 }
 
-void Calculator::pushin()
+
+
+void Calculator::pushin(string &temp)
 {
-}
-
-void Calculator::odd_operator_transform() {
-
 }
 
 void Calculator::reception() {

@@ -31,9 +31,11 @@ enum ABS_NUM{
 }; //用于计算绝对值符号个数
 
 stack<char> symbol_stack;
-string format();
-void pushin();
-void odd_operator_transform();
+string preprocess();
+void pushin(string &);
+static inline bool isLeftOperator(string &temp,string::size_type index) {
+    return temp[index-1] == '(' || temp[index-1] == '+' || temp[index-1] == '-' || temp[index-1] == '*' || temp[index-1] == '/' || temp[index-1] == '^';
+}
 
 string raw_input;
 string formatted_input;
