@@ -15,37 +15,35 @@ using namespace std;
 class Calculator {
 public:
     Calculator() = default;
-    bool calculate();
-private:
-    static void reception();
-    ostream &output(ostream &os = cout);
-    bool wavehand();
+    bool calculate(ostream &os = cout);
     void receive(istream &is = cin);
-
+    ostream &output(ostream &os = cout);
+private:
     enum PRIORITY{
-        PRIORITY_LEVEL_0 = 0, //+-
-        PRIORITY_LEVEL_1 = 1, //*/
-        PRIORITY_LEVEL_2 = 2, //%^
+        PRIORITY_LEVEL_0 = 0, //+ -
+        PRIORITY_LEVEL_1 = 1, //* /
+        PRIORITY_LEVEL_2 = 2, //% ^
         PRIORITY_LEVEL_3 = 3, //!
         PRIORITY_LEVEL_ERR = -1
     }; //用于定义符号优先级
     enum ABS_NUM{
         ABS_NUM_ODD = 1,
         ABS_NUM_EVEN = 2
-    }; //用于计算绝对值符号个数
+    }; //用于记录绝对值符号奇偶性
 
-    stack<char> symbol_stack;
-    stack<double> figure_stack;
+    stack<char> symbol_stack; //符号栈，用于保存符号
+    stack<double> figure_stack; //数字栈，用于保存数字
+    double result{}; //结果数字
+    string raw_input; //原始输入
+
+    static bool waveHand();
     static double eval(double ,double ,char );
+    static void reception();
     string preprocess();
     void mainProcess(string &);
     static bool isInt(double );
     bool isLeftBracket();
     static int getPrior(char );
-
-    double result{};
-    vector<string> postfix;
-    string raw_input;
     void doCalculate();
 };
 

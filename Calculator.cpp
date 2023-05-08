@@ -19,8 +19,6 @@ using namespace std;
  * @return 无返回值(void)
  * @param istream
  * @author 水冰月
- *
- * @TODO 重载此函数允许从迭代器中读取
  */
 void Calculator::receive(istream &is) {
     getline(is,raw_input);
@@ -29,6 +27,7 @@ void Calculator::receive(istream &is) {
 }
 
 /*!
+ * 输出函数，支持接受一个输出地
  *
  * @param os
  * @return
@@ -37,7 +36,11 @@ ostream& Calculator::output(ostream& os)
 {
     return os<<raw_input<<" = "<<result<<endl;
 }
-
+/*!
+ * 预处理函数，用于将单独的负数和正数转化为0-+x的形式，将单目运算符转化为双目版本
+ *
+ * @return
+ */
 string Calculator::preprocess()
 {
     string temp = raw_input;
@@ -57,7 +60,13 @@ string Calculator::preprocess()
     }
     return temp;
 }
-
+/*!
+ * 主计算步骤
+ * 主要内容是逐个检查由preprocess生成的temp字符串，并进行计算
+ * 计算方式为边找边运算，保证符号栈不存在一对同类括号
+ *
+ * @param temp
+ */
 void Calculator::mainProcess(string &temp)
 {
     int AbsNum = ABS_NUM::ABS_NUM_EVEN;
@@ -150,8 +159,11 @@ void Calculator::mainProcess(string &temp)
         doCalculate();
     }
     result = figure_stack.top();
+    figure_stack.pop();
 }
-
+/*！
+ * 辅助函数，用于包装弹出两数并计算的过程
+ */
 void Calculator::doCalculate() {
     double x1,x2,res;
     x2 = figure_stack.top();
@@ -163,7 +175,9 @@ void Calculator::doCalculate() {
     symbol_stack.pop();
     figure_stack.push(res);
 }
-
+/*！
+ * 接待函数，提供一段提示页面
+ */
 void Calculator::reception() {
     cout<<"-------------------------------------------------------"<<endl;
     cout<<"| This calculator supports following operations:      |"<<endl;
@@ -171,16 +185,22 @@ void Calculator::reception() {
     cout<<"| Type equation to calculate                          |"<<endl;
     cout<<"-------------------------------------------------------"<<endl;
 }
-
+/// 辅助函数，包装了检查是否为整数的过程，考虑了浮点误差
+/// \param x
+/// \return bool
 bool Calculator::isInt(double x) {
     auto y = (long int)x;
     return ((y-x)<0.000001 && (x-y)<0.000001);
 }
-
+/// 辅助函数，包装了检查括号的过程
+/// \return bool
 bool Calculator::isLeftBracket() {
     return symbol_stack.top() == '(' || symbol_stack.top() == '[' || symbol_stack.top() == '{';
 }
-
+/*！
+ * 用于获取符号优先级
+ * 遇到未定义符号直接抛出错误，不过实际上不会发生，异常符号会被忽略
+ */
 int Calculator::getPrior(char c) {
     switch (c) {
         case '+':
@@ -226,18 +246,24 @@ double Calculator::eval(double x1, double x2, char c) {
             throw invalid_argument("unknown operator");
     }
 }
-
-bool Calculator::wavehand() {
+/*!
+ * 挥手函数，用于结束计算
+ *
+ * @return bool 返回一个代表是否再次运算的布尔值
+ */
+bool Calculator::waveHand() {
     cout<<"If you do not want to calculate another equation ,enter 'n' to exit."<<endl;
     cout<<"Or enter 'c' to continue"<<endl;
     char c;
     cin>>c;
     return c != 'n';
 }
-
-bool Calculator::calculate() {
-    Calculator::reception();
+/*！
+ * 包装函数，用于将计算器的所有步骤隐藏起来
+ */
+bool Calculator::calculate(ostream &os) {
+    reception();
     receive();
-    output();
-    return wavehand();
+    output(os);
+    return waveHand();
 }
