@@ -26,6 +26,7 @@ void Calculator::receive(istream &is) {
     mainProcess(temp);
 }
 
+
 /*!
  * 输出函数，支持接受一个输出地
  *
@@ -266,4 +267,10 @@ bool Calculator::calculate(ostream &os) {
     receive();
     output(os);
     return waveHand();
+}
+
+void Calculator::receive(string &s) {
+    raw_input = s;
+    auto temp = preprocess();
+    mainProcess(temp);
 }
