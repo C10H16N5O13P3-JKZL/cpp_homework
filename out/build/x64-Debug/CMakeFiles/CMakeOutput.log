@@ -1,5 +1,5 @@
 The system is: Windows - 10.0.22621 - AMD64
-Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiling the C Compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler: D:/VS2022/IDE/VC/Tools/MSVC/14.35.32215/bin/Hostx64/x64/cl.exe 
 Build flags: 
 Id flags:  
@@ -17,13 +17,13 @@ Copyright (C) Microsoft Corporation.  All rights reserved.
 CMakeCCompilerId.obj 
 
 
-Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.exe"
+Compilation of the C Compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.exe"
 
-Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
+Compilation of the C Compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
 
-The C compiler identification is MSVC, found in "D:/Programming Projects/CLion CPP Projects/homework/out/build/x64-Debug/CMakeFiles/3.25.1-msvc1/CompilerIdC/CMakeCCompilerId.exe"
+The C Compiler identification is MSVC, found in "D:/Programming Projects/CLion CPP Projects/homework/out/build/x64-Debug/CMakeFiles/3.25.1-msvc1/CompilerIdC/CMakeCCompilerId.exe"
 
-Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiling the CXX Compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: D:/VS2022/IDE/VC/Tools/MSVC/14.35.32215/bin/Hostx64/x64/cl.exe 
 Build flags: 
 Id flags:  
@@ -41,25 +41,29 @@ Copyright (C) Microsoft Corporation.  All rights reserved.
 CMakeCXXCompilerId.obj 
 
 
-Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.exe"
+Compilation of the CXX Compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.exe"
 
-Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
+Compilation of the CXX Compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
 
-The CXX compiler identification is MSVC, found in "D:/Programming Projects/CLion CPP Projects/homework/out/build/x64-Debug/CMakeFiles/3.25.1-msvc1/CompilerIdCXX/CMakeCXXCompilerId.exe"
+The CXX Compiler identification is MSVC, found in "D:/Programming Projects/CLion CPP Projects/homework/out/build/x64-Debug/CMakeFiles/3.25.1-msvc1/CompilerIdCXX/CMakeCXXCompilerId.exe"
 
-Detecting C compiler ABI info compiled with the following output:
+Detecting C Compiler ABI info compiled with the following output:
 Change Dir: D:/Programming Projects/CLion CPP Projects/homework/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-mtz5c8
 
-Run Build Command(s):D:\VS2022\IDE\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\CMAKE\Ninja\ninja.exe cmTC_918e0 && [1/2] Building C object CMakeFiles\cmTC_918e0.dir\CMakeCCompilerABI.c.obj
-[2/2] Linking C executable cmTC_918e0.exe
+Run Build Command(s):D:\VS2022\IDE\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\CMAKE\Ninja\ninja.exe cmTC_918e0 && [1/2] Building C object CMakeFiles\cmTC_918e0.dir\CMakeCCompilerABI.c.obj
+
+[2/2] Linking C executable cmTC_918e0.exe
 
 
 
-Detecting CXX compiler ABI info compiled with the following output:
+
+Detecting CXX Compiler ABI info compiled with the following output:
 Change Dir: D:/Programming Projects/CLion CPP Projects/homework/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-lyur3i
 
-Run Build Command(s):D:\VS2022\IDE\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\CMAKE\Ninja\ninja.exe cmTC_1f24d && [1/2] Building CXX object CMakeFiles\cmTC_1f24d.dir\CMakeCXXCompilerABI.cpp.obj
-[2/2] Linking CXX executable cmTC_1f24d.exe
+Run Build Command(s):D:\VS2022\IDE\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\CMAKE\Ninja\ninja.exe cmTC_1f24d && [1/2] Building CXX object CMakeFiles\cmTC_1f24d.dir\CMakeCXXCompilerABI.cpp.obj
+
+[2/2] Linking CXX executable cmTC_1f24d.exe
+
 
 
 

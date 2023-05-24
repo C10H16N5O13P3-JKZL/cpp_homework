@@ -3,4 +3,4 @@ project(homework)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(homework main.cpp Calculator.cpp Calculator.h compiler.cpp compiler.h)
+add_executable(homework main.cpp Calculator.cpp Calculator.h Compiler.cpp Compiler.h)

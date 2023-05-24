@@ -6,7 +6,13 @@
 #define HOMEWORK_COMPILER_H
 
 
-class compiler {
+class AbstractTree{
+private:
+    class ASTNode{
+
+    };
+};
+class Compiler {
 
 };
 
