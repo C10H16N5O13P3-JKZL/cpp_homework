@@ -3,3 +3,8 @@
 //
 
 #include "Compiler.h"
+
+void AbstractTree::ASTNode::combine() {
+
+
+}
