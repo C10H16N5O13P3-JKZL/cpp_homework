@@ -269,8 +269,9 @@ bool Calculator::calculate(ostream &os) {
     return waveHand();
 }
 
-void Calculator::receive(string &s) {
+double Calculator::receive(const string &s) {
     raw_input = s;
     auto temp = preprocess();
     mainProcess(temp);
+    return result;
 }

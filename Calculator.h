@@ -18,7 +18,7 @@ public:
     bool calculate(ostream &os = cout);
     void receive(istream &is = cin);
     ostream &output(ostream &os = cout);
-    void receive(string &);
+    double receive(const string &);
 private:
     enum PRIORITY{
         PRIORITY_LEVEL_0 = 0, //+ -
