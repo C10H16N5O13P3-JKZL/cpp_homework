@@ -4,15 +4,9 @@
 
 #include "Compiler.h"
 
-void AbstractTree::ASTNode::combine() {
-
-
-}
-
-void AbstractTree::buildAST(ifstream infile) {
+void AbstractTree::buildAST(ifstream& infile) {
     string line;
     string name;
-    bool nextABS = false;
     while(getline(infile,line)){
         int type;
         vector<string> tokens;
@@ -22,7 +16,7 @@ void AbstractTree::buildAST(ifstream infile) {
             tokens.push_back(token);
         }
         auto opt = tokens[0];
-        if (opt == "val")
+        if (opt == "var")
             type = VAL;
         else if (opt == "RES")
             type = END;
@@ -36,8 +30,10 @@ void AbstractTree::buildAST(ifstream infile) {
                 break;
             case END: // RES
                 endForResult = true;
+                break;
             case CMD: // mul(add(a,b),c)
                 construct(line);
+                break;
             default:
                 throw runtime_error("invalid input!");
         }
@@ -47,8 +43,9 @@ void AbstractTree::buildAST(ifstream infile) {
 
 void AbstractTree::construct(const string &cmd) {
     if (variables.find(cmd)!=variables.end()){
-        root = construct(root,VAL,cmd,"",nowABS);
+        root = make_shared<ASTNode>(variables[cmd],nowABS);
         nowABS = false;
+        return;
     }
     auto pure = purify(cmd);
     auto tokens = tokenize(pure);
@@ -56,13 +53,20 @@ void AbstractTree::construct(const string &cmd) {
     int type;
     type = getType(opt);
     if (type == ABS){
+        nowABS = true;
         auto Npure = purify(tokens[1]);
         auto Ntokens = tokenize(Npure);
-        auto Nopt = Ntokens[0];
-        nowABS = true;
-        construct(Ntokens[1]);
-    } else
-        root = construct(root,type,tokens[1],tokens[2]);
+        if (checkVar(Ntokens[0])) {
+            nowABS = false;
+            root = make_shared<ASTNode>(variables[Ntokens[0]], true);
+        }
+        else{
+            construct(tokens[1]);
+        }
+    } else {
+        nowABS = false;
+        root = construct(root, type, tokens[1], tokens[2],true);
+    }
 }
 
 int AbstractTree::getType(const basic_string<char> &opt) {
@@ -82,7 +86,7 @@ int AbstractTree::getType(const basic_string<char> &opt) {
     else if (opt == "mod")
         type = MOD;
     else
-        type = ERR;
+        type = VAL;
     return type;
 }
 
@@ -99,7 +103,7 @@ string AbstractTree::purify(const string &str) {
     int bracket = 0;
     string::size_type pos1,pos2,pos3;
     pos1 = str.find('(');
-    pos3 = str.size()-1;
+    pos3 = (str[str.size()-1]==')')?str.size()-1:string ::npos;
     pos2 = string::npos;
     for (string::size_type i = 0;i<str.size();i++) {
         char c = str[i];
@@ -108,38 +112,136 @@ string AbstractTree::purify(const string &str) {
         else if (c == ')'){
             bracket--;
         }
-        if (c == ',' && bracket==1)
+        if (c == ',' && bracket==1) {
             pos2 = i;
+            break;
+        }
     }
     string pure(str);
-    pure.replace(pos1,1," ");
+    if (pos1!=string::npos) pure.replace(pos1,1," ");
     if (pos2!=string::npos) pure.replace(pos2,1," ");
-    pure.replace(pos3,1," ");
+    if (pos3!=string::npos) pure.replace(pos3,1," ");
     return pure;
 }
 
-auto AbstractTree::construct(shared_ptr<ASTNode> roo, int t,
-        const string& leftLeafRaw, const string& rightLeafRaw,bool isAbs)-> shared_ptr<ASTNode> {
+auto AbstractTree::construct(const shared_ptr<ASTNode>& roo, int t,
+        const string& leftLeafRaw, const string& rightLeafRaw,bool isABS)-> shared_ptr<ASTNode> {
     if (leftLeafRaw.empty()||rightLeafRaw.empty()){
         return nullptr;
     }
-    if (t == VAL){
-        double res = variables[leftLeafRaw];
-        shared_ptr<ASTNode> now(new ASTNode(res,nowABS));
-        return now;
-    }else if(t==ABS){
-        nowABS = true;
+    auto now1 = make_shared<ASTNode>(t, nowABS||isABS);
+    bool doLeft = true,doRight = true; //控制是否左右迭代
+    if (checkVar(leftLeafRaw)){
+        now1->leftLeaf = make_shared<ASTNode>(variables[leftLeafRaw], false);
+        doLeft = false;
+    }//如果左孩子是变量
+    if (checkVar(rightLeafRaw)){
+        now1->rightLeaf = make_shared<ASTNode>(variables[rightLeafRaw], false);
+        doRight = false;
+    }//如果右孩子是变量
 
+    if (doLeft) {
+        auto LLP = purify(leftLeafRaw);
+        auto tokensL = tokenize(LLP);
+        auto typeL = getType(tokensL[0]);
+        bool flagL = true;
+        while (typeL == ABS){
+            nowABS = true;
+            LLP = purify(tokensL[1]);
+            tokensL = tokenize(LLP);
+            if (checkVar(tokensL[0])) {
+                nowABS = false;
+                now1->leftLeaf = make_shared<ASTNode>(variables[tokensL[0]],true);
+                flagL = false;
+                break;
+            }
+            else if (getType(tokensL[0]) == ABS){
+                continue;
+            }
+            typeL = getType(tokensL[0]);
+        }
+        if (flagL) {
+            now1->leftLeaf = construct(now1->leftLeaf, typeL, tokensL[1], tokensL[2]);
+            nowABS = false;
+        }
     }
-    auto LLP = purify(leftLeafRaw);
-    auto RLP = purify(rightLeafRaw);
-    auto tokensL = tokenize(LLP);
-    auto tokensR = tokenize(RLP);
-    auto typeL = getType(tokensL[0]);
-    auto typeR = getType(tokensR[0]);
+    if (doRight) {
+        bool flagR = true;
+        auto RLP = purify(rightLeafRaw);
+        auto tokensR = tokenize(RLP);
+        auto typeR = getType(tokensR[0]);
+        while (typeR == ABS){
+            nowABS = true;
+            RLP = purify(tokensR[1]);
+            tokensR = tokenize(RLP);
+            if (checkVar(tokensR[0])) {
+                nowABS = false;
+                now1->rightLeaf = make_shared<ASTNode>(variables[tokensR[0]],true);
+                flagR = false;
+                break;
+            }
+            else if (getType(tokensR[0]) == ABS){
+                continue;
+            }
+            typeR = getType(tokensR[0]);
+        }
+        if (flagR) {
+            now1->rightLeaf = construct(now1->rightLeaf, typeR, tokensR[1], tokensR[2]);
+            nowABS = false;
+        }
+    }
 
-    auto now = make_shared<ASTNode>(t,)
-    roo->leftLeaf = construct(roo->leftLeaf,typeL,tokensL[1],tokensL[2]);
-    roo->rightLeaf = construct(roo->rightLeaf,typeR,tokensR[1],tokensR[2]);
-    return now;
+    return now1;
+}
+
+bool AbstractTree::checkVar(const string &leftLeafRaw) { return variables.find(leftLeafRaw) != variables.end(); }
+
+void AbstractTree::showVar(const string &var) {
+    cout<<variables.at(var)<<endl;
+}
+
+string AbstractTree::combine() {
+    return combine(root);
+}
+
+string AbstractTree::combine(const shared_ptr<ASTNode> &roo) {
+    auto type = roo->type;
+    char opt;
+    switch (type) {
+        case ADD:opt = '+';
+            break;
+        case SUB:opt = '-';
+            break;
+        case MUL:opt = '*';
+            break;
+        case DIV:opt = '/';
+            break;
+        case POW:opt = '^';
+            break;
+        case MOD:opt = '%';
+            break;
+        case VAL:return roo->isAbs?"|("+ to_string(roo->value)+")|":"("+ to_string(roo->value)+")";
+        default:
+            throw runtime_error("Unexcepted type");
+    }
+    if (roo->isAbs)
+        return "|(" + combine(roo->leftLeaf) +")"+ opt +"("+combine(roo->rightLeaf) + ")|";
+    else
+        return "((" + combine(roo->leftLeaf) + ")" + opt + "(" + combine(roo->rightLeaf) + "))";
+}
+
+string AbstractTree::infixExpress() {
+    return combine();
+}
+
+double Compiler::doCompile(const string &fileName) {
+    ifstream in(fileName);
+    if (!in)
+        throw runtime_error("cant open file");
+    AST.buildAST(in);
+    return CAL.receive(AST.infixExpress());
+}
+
+string Compiler::infix() {
+    return AST.infixExpress();
 }

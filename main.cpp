@@ -1,10 +1,12 @@
 #include "Calculator.h"
+#include "Compiler.h"
 
 int main() {
-    bool flag = true;
-    Calculator calculator = Calculator();
-    while (flag){
-        flag = calculator.calculate();
-    }
+    string file;
+    getline(cin,file);
+    Compiler compiler = Compiler();
+    cout<<compiler.doCompile(file)<<endl;
+    cout<<compiler.infix()<<endl;
     return 0;
 }
+//

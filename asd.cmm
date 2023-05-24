@@ -1,0 +1,3 @@
+var a = -1.23
+var b = 234
+abs(add(div(mul(a,b),pow(b,a)),b))

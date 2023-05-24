@@ -61,8 +61,8 @@ build CMakeFiles/homework.dir/Calculator.cpp.obj: CXX_COMPILER__homework_Debug D
   OBJECT_DIR = CMakeFiles\homework.dir
   OBJECT_FILE_DIR = CMakeFiles\homework.dir
 
-build CMakeFiles/homework.dir/compiler.cpp.obj: CXX_COMPILER__homework_Debug D$:/Programming$ Projects/CLion$ CPP$ Projects/homework/compiler.cpp || cmake_object_order_depends_target_homework
-  DEP_FILE = CMakeFiles\homework.dir\compiler.cpp.obj.d
+build CMakeFiles/homework.dir/Compiler.cpp.obj: CXX_COMPILER__homework_Debug D$:/Programming$ Projects/CLion$ CPP$ Projects/homework/Compiler.cpp || cmake_object_order_depends_target_homework
+  DEP_FILE = CMakeFiles\homework.dir\Compiler.cpp.obj.d
   FLAGS = -g
   OBJECT_DIR = CMakeFiles\homework.dir
   OBJECT_FILE_DIR = CMakeFiles\homework.dir
@@ -75,7 +75,7 @@ build CMakeFiles/homework.dir/compiler.cpp.obj: CXX_COMPILER__homework_Debug D$:
 #############################################
 # Link the executable homework.exe
 
-build homework.exe: CXX_EXECUTABLE_LINKER__homework_Debug CMakeFiles/homework.dir/main.cpp.obj CMakeFiles/homework.dir/Calculator.cpp.obj CMakeFiles/homework.dir/compiler.cpp.obj
+build homework.exe: CXX_EXECUTABLE_LINKER__homework_Debug CMakeFiles/homework.dir/main.cpp.obj CMakeFiles/homework.dir/Calculator.cpp.obj CMakeFiles/homework.dir/Compiler.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\homework.dir
