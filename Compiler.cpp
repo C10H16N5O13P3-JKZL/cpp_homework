@@ -4,6 +4,8 @@
 
 #include "Compiler.h"
 
+/// 总入口函数，前端调用这个就可以了
+/// \param infile
 void AbstractTree::buildAST(ifstream& infile) {
     string line;
     string name;
@@ -41,6 +43,7 @@ void AbstractTree::buildAST(ifstream& infile) {
 
 }
 
+//！入口树建构函数，用于第一次处理和处理第一个abs（可能仍有bug）
 void AbstractTree::construct(const string &cmd) {
     if (variables.find(cmd)!=variables.end()){
         root = make_shared<ASTNode>(variables[cmd],nowABS);
@@ -69,6 +72,7 @@ void AbstractTree::construct(const string &cmd) {
     }
 }
 
+//！获取操作符的类型
 int AbstractTree::getType(const basic_string<char> &opt) {
     int type;
     if (opt == "add")
@@ -90,6 +94,10 @@ int AbstractTree::getType(const basic_string<char> &opt) {
     return type;
 }
 
+//!
+//! 切分语句，非常简单的函数
+//! \param pure
+//! \return
 vector<string> AbstractTree::tokenize(const string &pure) {
     vector<string> tokens;
     string token;
@@ -124,6 +132,13 @@ string AbstractTree::purify(const string &str) {
     return pure;
 }
 
+/// 里·树建构函数，用于超过一层的迭代，思路很复杂，我也不确保没有bug
+/// \param roo
+/// \param t
+/// \param leftLeafRaw
+/// \param rightLeafRaw
+/// \param isABS
+/// \return
 auto AbstractTree::construct(const shared_ptr<ASTNode>& roo, int t,
         const string& leftLeafRaw, const string& rightLeafRaw,bool isABS)-> shared_ptr<ASTNode> {
     if (leftLeafRaw.empty()||rightLeafRaw.empty()){
@@ -194,16 +209,26 @@ auto AbstractTree::construct(const shared_ptr<ASTNode>& roo, int t,
     return now1;
 }
 
+/// 辅助函数，检查是否为变量名
+/// \param leftLeafRaw
+/// \return
 bool AbstractTree::checkVar(const string &leftLeafRaw) { return variables.find(leftLeafRaw) != variables.end(); }
 
+/// 未使用的辅助函数，用于展示变量的值
+/// \param var
 void AbstractTree::showVar(const string &var) {
-    cout<<variables.at(var)<<endl;
+    cout<<var<<" = "<<variables.at(var)<<endl;
 }
 
+/// 组合为中缀表示法的树启动函数，其实没啥用，定义多了
+/// \return
 string AbstractTree::combine() {
     return combine(root);
 }
 
+/// 实际干活的中缀构建函数，本质上是树的遍历，没什么好说的
+/// \param roo
+/// \return
 string AbstractTree::combine(const shared_ptr<ASTNode> &roo) {
     auto type = roo->type;
     char opt;
@@ -220,7 +245,8 @@ string AbstractTree::combine(const shared_ptr<ASTNode> &roo) {
             break;
         case MOD:opt = '%';
             break;
-        case VAL:return roo->isAbs?"|("+ to_string(roo->value)+")|":"("+ to_string(roo->value)+")";
+        case VAL:
+            return roo->isAbs?"|("+ to_string(roo->value)+")|":"("+ to_string(roo->value)+")";
         default:
             throw runtime_error("Unexcepted type");
     }
@@ -230,10 +256,15 @@ string AbstractTree::combine(const shared_ptr<ASTNode> &roo) {
         return "((" + combine(roo->leftLeaf) + ")" + opt + "(" + combine(roo->rightLeaf) + "))";
 }
 
+/// 构建中缀表达式的树的内部接口
+/// \return
 string AbstractTree::infixExpress() {
     return combine();
 }
 
+/// 编译器主函数，用于编译+计算
+/// \param fileName
+/// \return
 double Compiler::doCompile(const string &fileName) {
     ifstream in(fileName);
     if (!in)
@@ -242,6 +273,8 @@ double Compiler::doCompile(const string &fileName) {
     return CAL.receive(AST.infixExpress());
 }
 
+/// 编译器调用树的中缀表达式的函数，前端可见，前端用这个展示编译结果就行
+/// \return
 string Compiler::infix() {
     return AST.infixExpress();
 }
